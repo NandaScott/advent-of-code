@@ -353,11 +353,11 @@ class OverengineeringTheSolution {
     return this;
   }
 
-  moveOver(increment) {
+  moveOver() {
     this.over = this.over + this.overInc;
   }
 
-  moveDown(increment) {
+  moveDown() {
     this.down = this.down + this.downInc;
   }
 
