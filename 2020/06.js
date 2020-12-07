@@ -2108,60 +2108,74 @@ class What {
     this.alphabet = 'abcdefghijklmnopqrstuvwxyz'.split('');
   }
 
-  main2() {
-    const foo = [];
-    const bar = this.main2InputProcessing().map((groupAnswers) => {
-      const allMembersAnswered = [];
-      this.alphabet.forEach((letter) => {
-        const count = this.countInstances(groupAnswers.answers, letter).length;
-        if (count === groupAnswers.memberCount) {
-          allMembersAnswered.push(letter);
-        }
-      });
-      return allMembersAnswered.length;
-    });
-    const output = bar.reduce((acc, val) => acc + val);
-    return output;
+  inputProcessing(mapFunc) {
+    return this.input.split('\n\n').map(mapFunc);
   }
 
-  /**
-   * Takes the puzzle input and transforms it into a list of objects containing each group,
-   * with each group being a list of objects representing each person and their answers
-   *
-   * @returns Array
-   */
-  main2InputProcessing() {
-    return this.input.split('\n\n').map((group) => {
-      const allGroupAnswers = group.replace(/(\r\n|\n|\r)/gm, '');
-      const numberOfMembers = group.split('\n').filter((val) => val !== '')
-        .length;
-      return {
-        memberCount: numberOfMembers,
-        answers: allGroupAnswers,
-      };
+  part1Map(group) {
+    return group.replace(/(\r\n|\n|\r)/gm, '');
+  }
+
+  part2Map(group) {
+    const allGroupAnswers = group.replace(/(\r\n|\n|\r)/gm, '');
+    const numberOfMembers = group.split('\n').filter((val) => val !== '')
+      .length;
+    return {
+      memberCount: numberOfMembers,
+      answers: allGroupAnswers,
+    };
+  }
+
+  sumOfArray(array) {
+    return array.reduce((acc, val) => acc + val);
+  }
+
+  greater(a, b) {
+    return a > b;
+  }
+
+  equals(a, b) {
+    return a === b;
+  }
+
+  iterateOverAlphabet(
+    lengthQuantifier,
+    groupString,
+    accumulator,
+    comparisonFunc
+  ) {
+    return this.alphabet.forEach((letter) => {
+      const count = this.countInstances(groupString, letter).length;
+      if (comparisonFunc(count, lengthQuantifier)) {
+        accumulator.push(letter);
+      }
     });
+  }
+
+  main2() {
+    const allGroupsCount = this.inputProcessing(this.part2Map).map(
+      (groupAnswers) => {
+        const allMembersAnswered = [];
+        this.iterateOverAlphabet(
+          groupAnswers.memberCount,
+          groupAnswers.answers,
+          allMembersAnswered,
+          this.equals
+        );
+        return allMembersAnswered.length;
+      }
+    );
+    const grandTotal = this.sumOfArray(allGroupsCount);
+    return grandTotal;
   }
 
   main1() {
-    const foo = [];
-    this.input
-      .split('\n\n')
-      .map((val) => val.replace(/(\r\n|\n|\r)/gm, ''))
-      .forEach((group, i) => {
-        const questionsAnswered = [];
-        this.alphabet.forEach((letter) => {
-          const counted = this.countInstances(group, letter);
-          if (counted.length > 0) {
-            questionsAnswered.push(counted[0]);
-          }
-        });
-        const bar = { group: questionsAnswered };
-        foo.push(bar);
-      });
-    const totals = foo.map((groupObj) => {
-      return groupObj.group.length;
+    const allGroupsCount = this.inputProcessing(this.part1Map).map((group) => {
+      const questionsAnswered = [];
+      this.iterateOverAlphabet(0, group, questionsAnswered, this.greater);
+      return questionsAnswered.length;
     });
-    const grandTotal = totals.reduce((acc, val) => acc + val);
+    const grandTotal = this.sumOfArray(allGroupsCount);
     return grandTotal;
   }
 
@@ -2171,6 +2185,6 @@ class What {
   }
 }
 
-const answer1 = new What(input).main1();
+const answer1 = new What(input).main1(); //6726
 
-const answer2 = new What(input).main2();
+const answer2 = new What(input).main2(); //3316
