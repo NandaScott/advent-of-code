@@ -27,7 +27,7 @@ class Day7 {
     return input
       .split('\n')
       .map((rule) => {
-        const bags = rule.match(/([a-zA-Z]+\s[A-Za-z]+)\sbag/g);
+        const bags = rule.match(/(\d\s|)([a-zA-Z]+\s[A-Za-z]+)\sbag/g);
         const parent = bags[0];
         const children = bags.splice(1).join(', ');
         return { [parent]: children };
@@ -38,10 +38,10 @@ class Day7 {
       }, {});
   }
 
-  main(target) {
+  main1(target) {
     let successes = 0;
     Object.keys(this.input).forEach((rule) => {
-      const result = this.recursivelyGetBagChildren(target, rule);
+      const result = this.findGoldBag(target, rule);
       if (result) {
         this.parentBags.push(rule);
         successes++;
@@ -50,15 +50,15 @@ class Day7 {
     return successes;
   }
 
-  recursivelyGetBagChildren(target, bagRule) {
+  findGoldBag(target, bagRule) {
     const ruleChildren = this.input[bagRule];
     if (ruleChildren.includes('no other bag')) return false;
     if (ruleChildren.includes(target)) return true;
 
     const subBags = ruleChildren.split(', ');
     for (let i = 0; i < subBags.length; i++) {
-      const bag = subBags[i];
-      const subRuleChildren = this.recursivelyGetBagChildren(target, bag);
+      const bag = subBags[i].slice(2);
+      const subRuleChildren = this.findGoldBag(target, bag);
       if (subRuleChildren) {
         return true;
       }
