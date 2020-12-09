@@ -13,6 +13,7 @@ dotted black bags contain no other bags.`;
 class Day7 {
   constructor(input) {
     this.input = this.processInput(input);
+    this.parentBags = [];
   }
 
   /**
@@ -42,6 +43,7 @@ class Day7 {
     Object.keys(this.input).forEach((rule) => {
       const result = this.recursivelyGetBagChildren(target, rule);
       if (result) {
+        this.parentBags.push(rule);
         successes++;
       }
     });
@@ -60,7 +62,6 @@ class Day7 {
       if (subRuleChildren) {
         return true;
       }
-      return false;
     }
   }
 }
