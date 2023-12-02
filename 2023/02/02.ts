@@ -19,7 +19,7 @@ function parseGames(arg: string[]): GameRecord[] {
   });
 }
 
-export function byMaximum(game: GameRecord): GameRecord | undefined {
+const byMaximum: FilterFunction = (game) => {
   const [blue, green, red] = game[1];
   const MAX_BLUE = 14;
   const MAX_GREEN = 13;
@@ -34,7 +34,7 @@ export function byMaximum(game: GameRecord): GameRecord | undefined {
   }
 }
 
-export function byMinimum(game: GameRecord): GameRecord | undefined {
+const byMinimum: FilterFunction = (game) => {
   const [blue, green, red] = game[1];
   const blueMin = [Math.max(...blue)];
   const greenMin = [Math.max(...green)];
@@ -43,11 +43,11 @@ export function byMinimum(game: GameRecord): GameRecord | undefined {
   return game;
 }
 
-export function addGameIds(games: GameRecord[]): number {
+const addGameIds: MathFunction = (games) => {
   return games.reduce((prev, curr) => (prev + curr[0]), 0)
 }
 
-export function addPowers(games: GameRecord[]): number {
+const addPowers: MathFunction = (games) => {
   const multiplier = (a: number, b: number) => a * b;
   return games.reduce((prev, curr) => {
     const [blue, green, red] = curr[1];
@@ -65,3 +65,5 @@ export default function main(input: string[], filterBy: FilterFunction, mathFunc
   const validGamesTotal = mathFunction(validGames);
   return validGamesTotal;
 }
+
+export { addGameIds, addPowers, byMaximum, byMinimum }
