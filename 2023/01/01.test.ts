@@ -7,7 +7,7 @@ const input = (await puzzle.text()).split(/\n/);
 const digitsOnly = /\d/gm;
 const digitsAndNumbers = /(?=(one|two|three|four|five|six|seven|eight|nine))|\d/gm;
 
-describe('Advent Day 1', () => {
+describe('2023-01', () => {
   test('program should solve example 1', () => {
     const example1 = [
       '1abc2',

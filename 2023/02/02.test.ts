@@ -12,7 +12,7 @@ const exampleInput = [
 const puzzle = Bun.file('./2023/02/02.input.txt');
 const input = (await puzzle.text()).split(/\n/);
 
-describe.only('Advent Day 2', () => {
+describe('2023-02', () => {
   it('should solve example 1', () => {
     const output = main(exampleInput, byMaximum, addGameIds);
     expect(output).toBe(8);
