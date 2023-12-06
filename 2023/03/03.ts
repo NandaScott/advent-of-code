@@ -55,10 +55,6 @@ function traverseMap(x: number, y: number, startNo?: string, include?: boolean) 
 }
 
 export default function main(input: string[]) {
-  // input.forEach((line) => console.log(line));
 
   return traverseMap(0, 0);
 }
-
-const output = main(exampleInput);
-console.log([...output].reduce((acc, curr) => acc + parseInt(curr), 0));
