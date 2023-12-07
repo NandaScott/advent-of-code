@@ -109,3 +109,42 @@ export default function main(input: string) {
   });
   return Math.min(...output);
 }
+
+export function mainP2(input: string) {
+  const {
+    seeds,
+    seedToSoil,
+    soilToFertilizer,
+    fertilizerToWater,
+    waterToLight,
+    lightToTemp,
+    tempToHumidity,
+    humidityToLocation,
+  } = parseAlmanac(input);
+
+  let output: number = Infinity;
+
+  const seedStarts = seeds.filter((_, i) => i % 2 === 0);
+  const seedEnds = seeds.filter((_, i) => i % 2 !== 0);
+
+  for (let j = 0; j < seedStarts.length; j++) {
+    const start = seedStarts[j];
+    const end = seedEnds[j]
+
+    for (let i = start; i < start + end; i++) {
+      const seed = i;
+      const seedsToSoil = calculateMap(seed, seedToSoil);
+      const soilsToFertilizer = calculateMap(seedsToSoil, soilToFertilizer);
+      const fertilizersToWater = calculateMap(soilsToFertilizer, fertilizerToWater);
+      const watersToLight = calculateMap(fertilizersToWater, waterToLight);
+      const lightsToTemp = calculateMap(watersToLight, lightToTemp);
+      const tempsToHumidity = calculateMap(lightsToTemp, tempToHumidity);
+      const humiditiesToLocation = calculateMap(tempsToHumidity, humidityToLocation);
+      if (humiditiesToLocation < output) {
+        output = humiditiesToLocation;
+      }
+    }
+  }
+
+  return output;
+}
