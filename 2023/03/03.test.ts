@@ -1,11 +1,10 @@
 import { describe, expect, it } from 'bun:test';
 import main from './03';
+import getInput from '../../utils/getInput';
 
-const example = Bun.file('./2023/03/03.example.txt');
-const exampleInput = (await example.text()).split(/\n/);
+const exampleInput = await getInput('./2023/03/03.example.txt', true);
 
-const puzzle = Bun.file('./2023/03/03.input.txt');
-const input = (await puzzle.text()).split(/\n/);
+const input = await getInput('./2023/03/03.input.txt', true);
 
 describe('2023-03', () => {
   it.todo('should solve example 1', () => {

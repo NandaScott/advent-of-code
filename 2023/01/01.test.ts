@@ -1,8 +1,8 @@
 import { describe, expect, test } from 'bun:test';
 import main from './01';
+import getInput from '../../utils/getInput';
 
-const puzzle = Bun.file('./2023/01/01.input.txt');
-const input = (await puzzle.text()).split(/\n/);
+const input = await getInput('./2023/01/01.input.txt', true);
 
 const digitsOnly = /\d/gm;
 const digitsAndNumbers = /(?=(one|two|three|four|five|six|seven|eight|nine))|\d/gm;

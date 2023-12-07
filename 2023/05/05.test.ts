@@ -1,11 +1,10 @@
 import { describe, expect, test } from 'bun:test';
 import main, { mainP2 } from './05';
+import getInput from '../../utils/getInput';
 
-const puzzle = Bun.file('./2023/05/05.input.txt');
-const input = await puzzle.text();
+const input = await getInput('./2023/05/05.input.txt');
 
-const examplePuzzle = Bun.file('./2023/05/05.example.txt');
-const exampleInput = await examplePuzzle.text();
+const exampleInput = await getInput('./2023/05/05.example.txt');
 
 describe('2023-05', () => {
   test('program should solve example 1', () => {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'bun:test';
 import main, { addGameIds, byMaximum, byMinimum, addPowers } from './02';
+import getInput from '../../utils/getInput';
 
 const exampleInput = [
   'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green',
@@ -9,8 +10,7 @@ const exampleInput = [
   'Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green',
 ]
 
-const puzzle = Bun.file('./2023/02/02.input.txt');
-const input = (await puzzle.text()).split(/\n/);
+const input = await getInput('./2023/02/02.input.txt', true);
 
 describe('2023-02', () => {
   it('should solve example 1', () => {

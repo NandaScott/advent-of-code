@@ -1,13 +1,12 @@
 import { describe, expect, test } from 'bun:test';
 import main, { mainP2 } from './06';
+import getInput from '../../utils/getInput';
 
-const puzzle = Bun.file('./2023/06/06.input.txt');
-const input = (await puzzle.text()).split('\n');
+const input = await getInput('./2023/06/06.input.txt', true);
 
-const examplePuzzle = Bun.file('./2023/06/06.example.txt');
-const exampleInput = (await examplePuzzle.text()).split('\n');
+const exampleInput = await getInput('./2023/06/06.example.txt', true);
 
-describe.only('2023-05', () => {
+describe('2023-05', () => {
   test('program should solve example 1', () => {
     const output = main(exampleInput)
     expect(output).toBe(288);
